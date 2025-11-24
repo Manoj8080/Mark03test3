@@ -175,6 +175,7 @@ public class PaymentViewModel extends ViewModel {
     public MutableLiveData<StatusResponse> statusResponse = new MutableLiveData<>();
     public MutableLiveData<CancelResponse> cancelResponse = new MutableLiveData<>();
 
+
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable poller;
 
@@ -232,9 +233,9 @@ public class PaymentViewModel extends ViewModel {
                     String msg = (res.rm != null ? res.rm.toLowerCase() : "");
 
                     // 🔥 Final statuses → stop polling
-                    if (msg.contains("success") ||
+                    if (msg.contains("approved") ||
                             msg.contains("failed") ||
-                            msg.contains("cancel") ||
+                            msg.contains("invalid") ||
                             msg.contains("void")) {
 
                         stopStatusPolling();
@@ -302,7 +303,10 @@ public class PaymentViewModel extends ViewModel {
         repo.cancel(req, new Callback<CancelResponse>() {
             @Override
             public void onResponse(Call<CancelResponse> call, Response<CancelResponse> response) {
-                cancelResponse.setValue(response.body());
+
+                CancelResponse res = response.body();
+                cancelResponse.setValue(res);   // ✅ now rm goes to UI
+
                 state.setValue(PaymentState.CANCEL_DONE);
             }
 
@@ -312,4 +316,5 @@ public class PaymentViewModel extends ViewModel {
             }
         });
     }
+
 }

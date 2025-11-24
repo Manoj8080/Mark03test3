@@ -16,7 +16,7 @@ public class PaymentConfig {
         this(baseUrl,merchantId,clientId,storeId,securityToken,userId,30);
     }
     public PaymentConfig(int merchantId,int clientId,String storeId,String securityToken,String userId){
-        this("https://342b7f8d460e.ngrok-free.app/",merchantId,clientId,storeId,securityToken,userId,30);
+        this("https://7f0901046751.ngrok-free.app/",merchantId,clientId,storeId,securityToken,userId,30);
     }
     public String getBaseUrl(){
         return baseUrl;
