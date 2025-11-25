@@ -25,8 +25,8 @@ public class ApiClient {
             Request original = chain.request();
 
             Request newReq = original.newBuilder()
-                    .addHeader("x-api-user", "plutus")
-                    .addHeader("x-api-key", "supersecret123")
+                    .addHeader("x-api-user", "api")
+                    .addHeader("x-api-key", "key")
                     .build();
 
             return chain.proceed(newReq);
