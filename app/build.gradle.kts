@@ -13,7 +13,8 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://bd12f5c49de0.ngrok-free.app/\"")
+        buildConfigField("String", "BASE_URL", "\"https://8138c749bc9d.ngrok-free.app/\"")
+
     }
 
     // ✅ Correct buildFeatures block
@@ -35,6 +36,18 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    packaging {
+        resources {
+            excludes += "META-INF/io.netty.versions.properties"
+            excludes += "META-INF/INDEX.LIST"
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+            excludes += "META-INF/ASL2.0"
+        }
+    }
 }
 
 dependencies {
@@ -46,7 +59,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation(libs.constraintlayout)
-    implementation(project(":mark03"))
+    implementation(project(":Payment"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

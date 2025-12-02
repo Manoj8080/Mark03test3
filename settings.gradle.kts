@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Mark03test3"
-include(":app", ":mark03")
+include(":app", ":Payment")
