@@ -8,23 +8,28 @@ import androidx.lifecycle.ViewModelProvider;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.nukkadshops.mark03test3.BuildConfig;
 
-import com.nukkadshops.mark03.models.*;
+import com.nukkadshops.mark03.data.models.StatusResponse;
+import com.nukkadshops.mark03.data.models.UploadRequest;
+import com.nukkadshops.mark03.data.models.StatusRequest;
+import com.nukkadshops.mark03.data.models.CancelRequest;
+import com.nukkadshops.mark03.data.models.VoidRequest;
+import com.nukkadshops.mark03.data.repository.PaymentRepository;
 import com.nukkadshops.mark03.sdk.PaymentConfig;
 import com.nukkadshops.mark03.viewmodel.PaymentViewModel;
-import com.nukkadshops.mark03.viewmodel.VoidViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText amountEt, txnIdEt;
     private long savedPtr = 0;
 
+    PaymentRepository repository;
     Button uploadBtn, statusBtn, cancelBtn, voidBtn;
     TextView resultTv;
+    StatusResponse status;
 
     PaymentViewModel paymentViewModel;
-    VoidViewModel voidViewModel;
+    PaymentViewModel voidViewModel;
 
     private static final String TAG = "MARK03_TESTER";
 
@@ -61,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 .get(PaymentViewModel.class);
 
         voidViewModel = new ViewModelProvider(this, factory)
-                .get(VoidViewModel.class);
+                .get(PaymentViewModel.class);
 
         observeData();
         setupButtons(config);
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             paymentViewModel.uploadPayment(req);
         });
 
-        statusBtn.setOnClickListener(v -> {
+        /*statusBtn.setOnClickListener(v -> {
 
             StatusRequest req = new StatusRequest(
                     config.merchantId,
@@ -99,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
             );
 
             Toast.makeText(this, "Checking Status...", Toast.LENGTH_SHORT).show();
-            paymentViewModel.checkStatus(req);
-        });
+            repository.startStatusPolling(savedPtr,);
+        });*/
 
         cancelBtn.setOnClickListener(v -> {
 
@@ -159,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             resultTv.setText("Cancel Response:\n" + res.rm);
         });
 
-        voidViewModel.res1.observe(this, res -> {
+        voidViewModel.voidResponse.observe(this, res -> {
             resultTv.setText("Void Response:\n" + res);
         });
     }

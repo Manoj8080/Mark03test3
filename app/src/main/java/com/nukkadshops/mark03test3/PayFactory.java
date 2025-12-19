@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.nukkadshops.mark03.sdk.PaymentConfig;
 import com.nukkadshops.mark03.viewmodel.PaymentViewModel;
-import com.nukkadshops.mark03.viewmodel.VoidViewModel;
 
 public class PayFactory implements ViewModelProvider.Factory {
 
@@ -16,7 +15,7 @@ public class PayFactory implements ViewModelProvider.Factory {
         this.config = config;
     }
 
-    @NonNull
+    @SuppressWarnings("unchecked")
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
 
@@ -24,8 +23,8 @@ public class PayFactory implements ViewModelProvider.Factory {
             return (T) new PaymentViewModel(config);
         }
 
-        if (modelClass.isAssignableFrom(VoidViewModel.class)) {
-            return (T) new VoidViewModel(config);
+        if (modelClass.isAssignableFrom(PaymentViewModel.class)) {
+            return (T) new PaymentViewModel(config);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
